@@ -28,14 +28,40 @@ require_once('lib.php');
 
 global $DB;
 
-$id = required_param('id', PARAM_INT);    // Course Module ID
 
-if (!$cm = get_coursemodule_from_id('rezzumin', $id)) {
-    print_error('Course Module ID was incorrect'); // NOTE this is invalid use of print_error, must be a lang string id
+try {
+    $id = required_param('id', PARAM_INT);
+    setcookie("rezzumin_id", $id, time() + 60*60*24);
+} catch (coding_exception $e) {
+    $id = $_COOKIE['rezzumin_id'];
 }
-if (!$course = $DB->get_record('course', array('id'=> $cm->course))) {
-    print_error('course is misconfigured');  // NOTE As above
+
+list ($course, $cm) = get_course_and_cm_from_cmid($id, 'rezzumin');
+$rezzumin = $DB->get_record('rezzumin', array('id'=> $cm->instance), '*', MUST_EXIST);
+var_dump($course->id);
+$sql = "SELECT ret.id, ret.title, ret.timestamp, ret.owner_id, ret.course_id, rst.coverage, rst.status, rst.id AS sid
+   FROM {rezzumin_entry_text} ret join {rezzumin_summarized_text} rst
+     ON ret.id = rst.origin_id WHERE ret.course_id = :courseid";
+$params = ['courseid' => $course->id];
+$texts = array_values($DB->get_records_sql($sql, $params));
+//var_dump($texts);
+//die();
+$PAGE->set_title("Rezzumin");
+
+
+echo $OUTPUT->header();
+
+$i=0;
+foreach ($texts as $text){
+    $text->index = ++$i;
 }
-//if (!$rezzumin = $DB->get_record('rezzumin', array('id'=> $cm->instance))) {
-//    print_error('course module is incorrect'); // NOTE As above
-//}
+
+$template_context = (object)[
+    'display_msg' => $rezzumin->display_msg,
+    'new_text_url' => $CFG->wwwroot . '/mod/rezzumin/new_text.php?id='.$id,
+    'texts' => array_values($texts),
+];
+
+echo $OUTPUT->render_from_template('mod_rezzumin/view', $template_context);
+
+echo $OUTPUT->footer();

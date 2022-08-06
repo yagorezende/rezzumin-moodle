@@ -31,3 +31,6 @@ $string['rezzumin:myaddinstance'] = 'Add a new Rezzumin plugin to the My Moodle 
 $string['form_feedback_text_label'] = 'Message text';
 $string['form_feedback_text_field_label'] = 'Please enter a message.';
 $string['form_feedback_type_label'] = 'Message Type';
+$string['text_title'] = 'Text Title';
+$string['text_body'] = 'Text Body';
+$string['text_percent'] = 'Text Coverage Percent';
