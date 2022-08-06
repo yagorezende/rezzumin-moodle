@@ -23,9 +23,13 @@
 
     }
 }}
-<h1>List of Messages:</h1>
-{{#messages}}
-<p>Msg: {{content}} | {{msg_type}}</p>
-{{/messages}}
+<h1>Rezzumin Activity:</h1>
+<p>{{display_msg}}</p>
 <hr>
-<input type="button" class="btn btn-primary" value="Create Message" onclick="location.href='{{edit_url}}'">
+<h3>Texts</h3>
+{{#texts}}
+    <p>{{index}} - <a href="#?summary={{sid}}">{{title}}</a> - {{#userdate}}{{timestamp}}, {{#str}}
+        strftimedate, core_langconfig {{/str}}{{/userdate}} | {{status}}</p>
+{{/texts}}
+<hr>
+<input type="button" class="btn btn-primary" value="Insert Activity Text" onclick="location.href='{{new_text_url}}'">

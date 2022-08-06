@@ -20,39 +20,40 @@
  * @license https://opensource.org/licenses/BSD-2-Clause
  */
 
+
+global $CFG;
 //moodleform is defined in formslib.php
 require_once("$CFG->libdir/formslib.php");
 
-class rezzumin_feedback_edit_form extends moodleform
+class rezzumin_new_text_form extends moodleform
 {
     //Add elements to form
     public function definition()
     {
-        global $CFG;
         $mform = $this->_form; // Don't forget the underscore!
 
-        $mform->addElement('text', 'messagetext', get_string('form_feedback_text_label',
-            'local_rezzumin')); // Add elements to your form.
-        $mform->setType('messagetext', PARAM_NOTAGS);                   // Set type of element.
-        $mform->setDefault('messagetext', get_string('form_feedback_text_field_label',
-            'local_rezzumin'));
-        // Default value.
-        $choices = array();
-        $choices['0'] = \core\notification::SUCCESS;
-        $choices['1'] = \core\notification::WARNING;
-        $choices['2'] = \core\notification::ERROR;
-        $choices['3'] = \core\notification::INFO;
+        $mform->addElement('text', 'textTitle', get_string('text_title', 'rezzumin'));
+        $mform->setDefault('textTitle', 'My Text Title');
 
-        $mform->addElement('select', 'messagetype', get_string('form_feedback_type_label',
-            'local_rezzumin'), $choices);
-        $mform->setDefault('messagetype', '3');
+        $mform->addElement('textarea', 'textBody',
+            get_string("text_body", "rezzumin"),
+            'wrap="virtual" rows="20" cols="50"');// Add elements to your form.
+        $mform->setType('textBody', PARAM_TEXT);
 
-        $this->add_action_buttons();
+        $mform->addElement('text', 'textCoverage', get_string('text_coverage', 'rezzumin'));
+        $mform->setType('textCoverage', PARAM_INT);                   // Set type of element.
+        $mform->addRule('textCoverage', get_string('text_coverage_error', 'rezzumin'),
+            'numeric', 'client', false, false);
+
+        $this->add_action_buttons(true, 'Save Text');
     }
 
     //Custom validation should be added here
     function validation($data, $files)
     {
+        if ($data->textCoverage > 100 or $data->textCoverage < 25) {
+            return array()['The text coverage must be between 25 and 100 percent'];
+        }
         return array();
     }
 }

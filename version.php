@@ -16,7 +16,7 @@
 //    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package local_rezzumin
+ * @package mod_rezzumin
  * @author  Yago Rezende
  * @license https://opensource.org/licenses/BSD-2-Clause
  * @var stdClass $plugin
@@ -24,6 +24,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'local_rezzumin';  // Recommended since 2.0.2 (MDL-26035). Required since 3.0 (MDL-48494)
-$plugin->version = 2022080200;  // YYYYMMDDHH (year, month, day, 24-hr time)
+$plugin->component = 'mod_rezzumin';  // Recommended since 2.0.2 (MDL-26035). Required since 3.0 (MDL-48494)
+$plugin->version = 2022080201;  // YYYYMMDDHH (year, month, day, 24-hr time)
 $plugin->requires = 2016052300; // YYYYMMDDHH (This is the release version for Moodle 2.0)

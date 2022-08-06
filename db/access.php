@@ -24,8 +24,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $capabilities = array(
-
-    'local/rezzumin:addinstance' => array(
+    'mod/rezzumin:addinstance' => array(
         'riskbitmask' => RISK_XSS,
 
         'captype' => 'write',
@@ -37,17 +36,18 @@ $capabilities = array(
         'clonepermissionsfrom' => 'moodle/course:manageactivities'
     ),
 
-    'local/rezzumin:view' => array(
+    'mod/MODULENAME:view' => array(
         'captype' => 'read',
         'contextlevel' => CONTEXT_MODULE,
         'archetypes' => array(
-            'guest' => CAP_ALLOW,
-            'user' => CAP_ALLOW,
+            'teacher' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW
         )
     ),
 
     /* TODO: review public portfolio API first!
-        'local/rezzumin:portfolioexport' => array(
+        'mod/rezzumin:portfolioexport' => array(
 
             'captype' => 'read',
             'contextlevel' => CONTEXT_MODULE,
@@ -58,12 +58,13 @@ $capabilities = array(
         ),*/
 
     // can manage files in the folder
-    'local/rezzumin:managefiles' => array(
+    'mod/rezzumin:managefiles' => array(
         'riskbitmask' => RISK_SPAM,
         'captype' => 'write',
         'contextlevel' => CONTEXT_MODULE,
         'archetypes' => array(
-            'editingteacher' => CAP_ALLOW
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW,
         )
     )
 );
