@@ -51,6 +51,9 @@
                 <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
                 <KEY NAME="origin_fk" TYPE="foreign" FIELDS="origin_id" REFTABLE="rezzumin_entry_text" REFFIELDS="id"/>
             </KEYS>
+            <INDEXES>
+                <INDEX NAME="origin_id" UNIQUE="true" FIELDS="origin_id"/>
+            </INDEXES>
         </TABLE>
     </TABLES>
 </XMLDB>

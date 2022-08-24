@@ -20,18 +20,33 @@
  * @package    rezzumin
  * @copyright  2022 yagorezende@id.uff.br
  * @author     Yago Rezende
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    https://opensource.org/licenses/BSD-2-Clause BSD-2 or later
  */
 
-$string['pluginname'] = 'Rezzumin plugin';
-$string['rezzumin'] = 'Rezzumin';
-$string['modulename'] = 'Rezzumin';
-$string['rezzumin:addinstance'] = 'Add a new Rezzumin plugin';
-$string['rezzumin:myaddinstance'] = 'Add a new Rezzumin plugin to the My Moodle page';
-$string['form_feedback_text_label'] = 'Message text';
-$string['form_feedback_text_field_label'] = 'Please enter a message.';
-$string['form_feedback_type_label'] = 'Message Type';
-$string['text_title'] = 'Text Title';
-$string['text_body'] = 'Text Body';
-$string['text_coverage'] = 'Text Coverage Percent';
-$string['add_instance_msg'] = 'Summaries Name';
+require_once('../../config.php');
+require_once('lib.php');
+
+global $DB;
+
+
+try {
+    $id = required_param('id', PARAM_INT);
+    setcookie("rezzumin_id", $id, time() + 60*60*24);
+} catch (coding_exception $e) {
+    $id = $_COOKIE['rezzumin_id'];
+}
+
+
+$text_id = required_param('summary', PARAM_INT);
+
+$record = $DB->get_record('rezzumin_summarized_text', array('id' => $text_id));
+$original = $DB->get_record('rezzumin_entry_text', array('id' => $record->origin_id));
+
+$PAGE->set_title($original->title);
+
+echo $OUTPUT->header();
+
+echo "<h1>" . $original->title . " (Summary):</h1>";
+echo "<p>" . $record->body . ".</p>";
+
+echo $OUTPUT->footer();
