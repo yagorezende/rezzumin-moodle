@@ -20,18 +20,24 @@
  * @package    rezzumin
  * @copyright  2022 yagorezende@id.uff.br
  * @author     Yago Rezende
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    https://opensource.org/licenses/BSD-2-Clause BSD-2 or later
  */
 
-$string['pluginname'] = 'Rezzumin plugin';
-$string['rezzumin'] = 'Rezzumin';
-$string['modulename'] = 'Rezzumin';
-$string['rezzumin:addinstance'] = 'Add a new Rezzumin plugin';
-$string['rezzumin:myaddinstance'] = 'Add a new Rezzumin plugin to the My Moodle page';
-$string['form_feedback_text_label'] = 'Message text';
-$string['form_feedback_text_field_label'] = 'Please enter a message.';
-$string['form_feedback_type_label'] = 'Message Type';
-$string['text_title'] = 'Text Title';
-$string['text_body'] = 'Text Body';
-$string['text_coverage'] = 'Text Coverage Percent';
-$string['add_instance_msg'] = 'Summaries Name';
+require_once('../../config.php');
+
+global $DB;
+
+$id = $_POST['id'];
+$body = $_POST['body'];
+
+echo "values = id: " . $id . " | body: " . $body;
+$record = new stdClass();
+$record->id = $id;
+$record->body = $body;
+$record->status = "done";
+
+if($DB->update_record("rezzumin_summarized_text", $record)) {
+    echo "Success!";
+} else {
+    echo "Fail!";
+}

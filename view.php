@@ -20,7 +20,7 @@
  * @package    rezzumin
  * @copyright  2022 yagorezende@id.uff.br
  * @author     Yago Rezende
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    https://opensource.org/licenses/BSD-2-Clause BSD-2 or later
  */
 
 require_once('../../config.php');
@@ -48,9 +48,6 @@ $texts = array_values($DB->get_records_sql($sql, $params));
 //die();
 $PAGE->set_title("Rezzumin");
 
-
-echo $OUTPUT->header();
-
 $i=0;
 foreach ($texts as $text){
     $text->index = ++$i;
@@ -59,8 +56,12 @@ foreach ($texts as $text){
 $template_context = (object)[
     'display_msg' => $rezzumin->display_msg,
     'new_text_url' => $CFG->wwwroot . '/mod/rezzumin/new_text.php?id='.$id,
+    'app_url' =>  $CFG->wwwroot . '/mod/rezzumin',
     'texts' => array_values($texts),
+    'id' => $id,
 ];
+
+echo $OUTPUT->header();
 
 echo $OUTPUT->render_from_template('mod_rezzumin/view', $template_context);
 

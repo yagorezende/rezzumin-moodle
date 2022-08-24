@@ -28,8 +28,9 @@
 <hr>
 <h3>Texts</h3>
 {{#texts}}
-    <p>{{index}} - <a href="#?summary={{sid}}">{{title}}</a> - {{#userdate}}{{timestamp}}, {{#str}}
-        strftimedate, core_langconfig {{/str}}{{/userdate}} | {{status}}</p>
+    <p>{{index}} - <a href="{{app_url}}/summary.php?id={{id}}&summary={{sid}}">{{title}}</a> - {{#userdate}}{{timestamp}}, {{#str}}
+        strftimedate, core_langconfig {{/str}}{{/userdate}} | {{status}} |
+        <a href="{{app_url}}/process_text.php?id={{sid}}">trigger</a></p>
 {{/texts}}
 <hr>
 <input type="button" class="btn btn-primary" value="Insert Activity Text" onclick="location.href='{{new_text_url}}'">

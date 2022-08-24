@@ -21,6 +21,7 @@
  */
 
 require_once(__DIR__ . '/../../config.php');
+require_once('process_text.php');
 require_once($CFG->dirroot . '/mod/rezzumin/classes/form/new_text.php');
 
 global $DB, $USER;
@@ -47,7 +48,7 @@ if ($mform->is_cancelled()) {
     $recordToInsert->owner_id = $USER->id;
     $recordToInsert->course_id = $course->id;
     $recordToInsert->timestamp = time();
-    var_dump($recordToInsert);
+//    var_dump($recordToInsert);
 
     $summarizedRecordToInsert = new stdClass();
     $summarizedRecordToInsert->coverage = $fromform->textCoverage;
@@ -58,13 +59,16 @@ if ($mform->is_cancelled()) {
     $summarizedRecordToInsert->origin_id = $DB->insert_record('rezzumin_entry_text', $recordToInsert);
     $DB->insert_record('rezzumin_summarized_text', $summarizedRecordToInsert);
 
+    // Request summary
+    requestSummary($summarizedRecordToInsert->origin_id);
+
     // Redirect on success
     redirect($CFG->wwwroot . '/mod/rezzumin/view.php?id=' . $id,
         'Your text is been processed and will be available soon');
+}else{
+    // [ BEGIN OF FORM ]
+    // Render part
+    echo $OUTPUT->header();
+    $mform->display();
+    echo $OUTPUT->footer();
 }
-
-// [ BEGIN OF FORM ]
-// Render part
-echo $OUTPUT->header();
-$mform->display();
-echo $OUTPUT->footer();

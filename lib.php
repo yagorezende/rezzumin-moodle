@@ -20,14 +20,15 @@
  * @package    rezzumin
  * @copyright  2022 yagorezende@id.uff.br
  * @author     Yago Rezende
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    https://opensource.org/licenses/BSD-2-Clause BSD-2 or later
  */
 
-
 function rezzumin_add_instance($data){
+    // save the plugin instance on DB (default procedure)
     global $DB;
     $data->timemodified = time();
     $data->id = $DB->insert_record('rezzumin', $data);
+
     return $data->id;
 }
 function rezzumin_update_instance($data){
@@ -36,7 +37,6 @@ function rezzumin_update_instance($data){
 }
 
 function rezzumin_delete_instance($id){
-    // TODO: drop database and remove files
     return true;
 }
 
