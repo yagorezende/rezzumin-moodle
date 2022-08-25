@@ -35,6 +35,9 @@ from sklearn.metrics import silhouette_score
 from sklearn.preprocessing import normalize
 from scipy.stats import ttest_1samp, ttest_ind, ttest_rel, norm, pearsonr
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.path.join(BASE_DIR, 'rezzumin_nlp/data')
+
 class Converter:
     def __init__(self, text: str, _id: int, percent: int):
         self.text = text
@@ -44,6 +47,10 @@ class Converter:
         self.done = False
         self.fail = False
         self.result = None
+
+    @staticmethod
+    def debug():
+        return BASE_DIR
 
     def process(self):
         sentences = self.text.split('.')
@@ -72,7 +79,7 @@ class Converter:
 #         text_reading(file_request)  #+10%
 #         file_request.incrementStatus(10)
         try:
-            names_dict = self.get_name_dict("./data")  #+10%
+            names_dict = self.get_name_dict(DATA_DIR)  #+10%
             print("get_name_dict Done!")
     #         file_request.incrementStatus(10)
 

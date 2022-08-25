@@ -18,6 +18,10 @@ under the supervision of [Prof. Dr. Diogo Mattos](https://www.labgen.lid.uff.br/
 3. Manage and store multiple texts
 4. Generate summarized text
 ---
+### Setup
+Note: Don't execute the setup_converter.sh script as root, use a sudo user!
+add Listen 8181 on /etc/apache2/ports.conf
+
 Powered by: [CNPq](https://www.gov.br/cnpq/)
 <br>
 Developed by: [@yagorezende](https://twitter.com/codepython)

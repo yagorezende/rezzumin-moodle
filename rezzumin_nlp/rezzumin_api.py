@@ -9,11 +9,12 @@ class RezzuminAPI(Flask):
 
     def start(self):
         self.init_endpoints()
+        return self
 
     def init_endpoints(self):
         @self.route('/hello', methods=['GET'])
         def get_hello():
-            return "<h1>Test</h1>"
+            return f"<h1>Test running at {Converter.debug()}</h1>\n"
 
         @self.route('/send_text', methods=['POST'])
         def send_text():
@@ -46,6 +47,8 @@ class RezzuminAPI(Flask):
 
     def stop(self):
         self.shutdown_server()
+
+app = RezzuminAPI().start()
 
 if __name__ == "__main__":
     api = RezzuminAPI()
